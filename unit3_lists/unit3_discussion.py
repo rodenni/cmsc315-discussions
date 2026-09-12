@@ -57,8 +57,7 @@ def search_value(lst, value):
     # starting from index 0, until we either find a match or reach
     # the end of the list. Python lists are not sorted or indexed by
     # value, so there's no way to "jump" to where a value might be —
-    # every element must be examined in the worst case, making this
-    # an O(n) operation.
+    # every element must be examined in the worst case (O(n)).
     for i in range(len(lst)):
         if lst[i] == value:
             return i
