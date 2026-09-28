@@ -3,92 +3,107 @@
 UNIT 6 DISCUSSION: Python Dictionaries as Hash Tables
 ====================================================
 
-INSTRUCTIONS:
-In this activity, you will work with Python dictionaries
-to simulate the behavior of a hash table.
-
-You will modify the provided starter code to demonstrate
-common operations and explain key concepts.
-
-Follow all TODO prompts in the code and ensure your output
-clearly communicates what your program is doing at each step.
-
-----------------------------------------------------
+This program demonstrates how Python dictionaries behave
+like hash tables by showing insert, lookup, update, delete,
+and edge-case operations.
 """
-
 
 def main():
     print("=== UNIT 6: DICTIONARIES AS HASH TABLES ===")
 
     # ===============================
-    # TODO (Student): CREATE A HASH TABLE
+    # CREATE A HASH TABLE (Dictionary)
     # ===============================
     #
-    # Requirements:
-    # 1. Create an empty dictionary.
-    # 2. Add at least 5 key-value pairs.
-    # 3. Add comments explaining how a dictionary
-    #    behaves like a hash table.
-    # 4. Display the contents of the dictionary.
-
+    # In Python, a dictionary *is* a hash table.
+    # Keys are hashed internally, and the hash determines
+    # where the key-value pair is stored in memory.
+    #
+    # Creating a dictionary simulates creating a hash table.
 
     print("\n=== INSERT OPERATIONS ===")
-    print("TODO: Create a dictionary and add multiple key-value pairs.")
+
+    hash_table = {}  # empty hash table
+
+    # Insert key-value pairs
+    hash_table["NH"] = 24
+    hash_table["VT"] = 46
+    hash_table["WI"] = 31
+    hash_table["CA"] = 12
+    hash_table["TX"] = 99
+
+    print("Hash table after inserts:")
+    print(hash_table)
 
     # ===============================
-    # TODO (Student): LOOKUP OPERATIONS
+    # LOOKUP OPERATIONS
     # ===============================
     #
-    # Requirements:
-    # 1. Retrieve at least two existing keys.
-    # 2. Clearly display the lookup results.
-    # 3. Add meaningful comments to explain how the lookup works.
+    # Lookup in a dictionary is O(1) average time.
+    # Python hashes the key, jumps directly to the bucket,
+    # and retrieves the value.
 
     print("\n=== LOOKUP OPERATIONS ===")
-    print("TODO: Demonstrate successful key lookups.")
+
+    print("Lookup NH:", hash_table["NH"])
+    print("Lookup WI:", hash_table["WI"])
 
     # ===============================
-    # TODO (Student): UPDATE OPERATIONS
+    # UPDATE OPERATIONS
     # ===============================
     #
-    # Requirements:
-    # 1. Update the value associated with an existing key.
-    # 2. Display the dictionary before and after the update.
-    # 3. Use comments to explain what happens when an existing key is assigned
-    #    a new value.
+    # Updating a key simply overwrites the value stored
+    # at that key's hash location.
 
     print("\n=== UPDATE OPERATIONS ===")
-    print("TODO: Demonstrate updating an existing key.")
+
+    print("Before update:", hash_table)
+    hash_table["CA"] = 100  # update existing key
+    print("After update (CA changed to 100):", hash_table)
 
     # ===============================
-    # TODO (Student): DELETE OPERATIONS
+    # DELETE OPERATIONS
     # ===============================
     #
-    # Requirements:
-    # 1. Delete at least one key-value pair.
-    # 2. Display the dictionary before and after deletion.
-    # 3. Use comments to explain what happens when a key is removed.
+    # Deleting removes the key-value pair entirely.
+    # The hash table frees that bucket for future use.
 
     print("\n=== DELETE OPERATIONS ===")
-    print("TODO: Demonstrate deleting a key-value pair.")
+
+    print("Before deletion:", hash_table)
+    del hash_table["TX"]
+    print("After deleting TX:", hash_table)
 
     # ===============================
-    # TODO (Student): EDGE CASES
+    # EDGE CASES
     # ===============================
-    #
-    # Demonstrate at least two edge cases.
-    #
-    # Example ideas:
-    # - Lookup a missing key
-    # - Delete a missing key safely
-    # - Update a missing key
-    # - Use an empty dictionary
-    #
-    # Explain what happens in each case.
 
     print("\n=== EDGE CASES ===")
-    print("TODO: Demonstrate and explain edge cases.")
 
+    # 1. Lookup a missing key
+    print("\nEdge Case 1: Lookup missing key 'FL'")
+    try:
+        print(hash_table["FL"])
+    except KeyError:
+        print("KeyError: 'FL' does not exist in the hash table.")
+
+    # 2. Delete a missing key safely
+    print("\nEdge Case 2: Safe deletion of missing key 'AZ'")
+    removed_value = hash_table.pop("AZ", None)
+    print("Result of deleting AZ:", removed_value)
+    print("Dictionary unchanged:", hash_table)
+
+    # 3. Update a missing key (creates a new entry)
+    print("\nEdge Case 3: Updating missing key 'NY'")
+    hash_table["NY"] = 55
+    print("After adding NY:", hash_table)
+
+    # 4. Using an empty dictionary
+    print("\nEdge Case 4: Operations on an empty dictionary")
+    empty_dict = {}
+    print("Empty dictionary:", empty_dict)
+    print("Trying to lookup a key in empty dictionary:")
+    print("empty_dict.get('anything') returns:", empty_dict.get("anything"))
 
 
 if __name__ == "__main__":
