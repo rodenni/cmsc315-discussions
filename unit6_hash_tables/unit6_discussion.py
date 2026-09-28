@@ -3,108 +3,120 @@
 UNIT 6 DISCUSSION: Python Dictionaries as Hash Tables
 ====================================================
 
-This program demonstrates how Python dictionaries behave
-like hash tables by showing insert, lookup, update, delete,
-and edge-case operations.
+This program simulates an auto parts lookup system using
+Python dictionaries to behave like a hash table. Each part
+number acts as a unique key, and the part description acts
+as the value.
+----------------------------------------------------
 """
 
 def main():
     print("=== UNIT 6: DICTIONARIES AS HASH TABLES ===")
 
     # ===============================
-    # CREATE A HASH TABLE (Dictionary)
+    # CREATE A HASH TABLE (Auto Parts Inventory)
     # ===============================
     #
-    # In Python, a dictionary *is* a hash table.
-    # Keys are hashed internally, and the hash determines
-    # where the key-value pair is stored in memory.
+    # A Python dictionary behaves like a hash table because:
+    # - Each key (part number) is hashed internally.
+    # - The hash determines where the key-value pair is stored.
+    # - Lookups, inserts, updates, and deletions are O(1) average time.
     #
-    # Creating a dictionary simulates creating a hash table.
+    # Here we create an auto parts inventory using part numbers
+    # as keys and part descriptions as values.
 
     print("\n=== INSERT OPERATIONS ===")
 
-    hash_table = {}  # empty hash table
+    auto_parts = {}  # empty hash table (inventory)
 
-    # Insert key-value pairs
-    hash_table["NH"] = 24
-    hash_table["VT"] = 46
-    hash_table["WI"] = 31
-    hash_table["CA"] = 12
-    hash_table["TX"] = 99
+    # Insert at least 5 auto parts
+    auto_parts["A123"] = "Alternator - Honda Civic 2010"
+    auto_parts["B204"] = "Brake Pads - Ford F-150"
+    auto_parts["C331"] = "Clutch Kit - Subaru WRX"
+    auto_parts["F555"] = "Fuel Pump - Toyota Camry"
+    auto_parts["S777"] = "Starter Motor - Chevy Silverado"
 
-    print("Hash table after inserts:")
-    print(hash_table)
+    print("Auto Parts Inventory After Inserts:")
+    for part, desc in auto_parts.items():
+        print(f"{part}: {desc}")
 
     # ===============================
     # LOOKUP OPERATIONS
     # ===============================
     #
-    # Lookup in a dictionary is O(1) average time.
-    # Python hashes the key, jumps directly to the bucket,
-    # and retrieves the value.
+    # Lookup works by hashing the key and jumping directly
+    # to the correct bucket. This makes finding parts fast.
+    #
+    # We will retrieve two existing part numbers.
 
     print("\n=== LOOKUP OPERATIONS ===")
 
-    print("Lookup NH:", hash_table["NH"])
-    print("Lookup WI:", hash_table["WI"])
+    print("Looking up part A123:", auto_parts["A123"])
+    print("Looking up part S777:", auto_parts["S777"])
 
     # ===============================
     # UPDATE OPERATIONS
     # ===============================
     #
-    # Updating a key simply overwrites the value stored
-    # at that key's hash location.
+    # Updating a key simply overwrites the value stored at
+    # that key's hashed location. This simulates updating
+    # part information in an inventory system.
 
     print("\n=== UPDATE OPERATIONS ===")
 
-    print("Before update:", hash_table)
-    hash_table["CA"] = 100  # update existing key
-    print("After update (CA changed to 100):", hash_table)
+    print("Before update:", auto_parts["B204"])
+    auto_parts["B204"] = "Brake Pads - Ford F-150 (Heavy Duty)"
+    print("After update:", auto_parts["B204"])
 
     # ===============================
     # DELETE OPERATIONS
     # ===============================
     #
-    # Deleting removes the key-value pair entirely.
-    # The hash table frees that bucket for future use.
+    # Deleting a key-value pair removes the part from the
+    # inventory entirely. The bucket becomes available for
+    # future inserts.
 
     print("\n=== DELETE OPERATIONS ===")
 
-    print("Before deletion:", hash_table)
-    del hash_table["TX"]
-    print("After deleting TX:", hash_table)
+    print("Before deletion:", auto_parts)
+    del auto_parts["F555"]  # remove fuel pump
+    print("After deleting F555:", auto_parts)
 
     # ===============================
     # EDGE CASES
     # ===============================
+    #
+    # Demonstrate:
+    # - Lookup missing key
+    # - Safe delete missing key
+    # - Update missing key (creates new entry)
+    # - Empty dictionary behavior
 
     print("\n=== EDGE CASES ===")
 
-    # 1. Lookup a missing key
-    print("\nEdge Case 1: Lookup missing key 'FL'")
-    try:
-        print(hash_table["FL"])
-    except KeyError:
-        print("KeyError: 'FL' does not exist in the hash table.")
+    # 1. Lookup missing part
+    print("\nAttempting lookup of missing part 'X999':")
+    if "X999" in auto_parts:
+        print(auto_parts["X999"])
+    else:
+        print("Part X999 not found (KeyError avoided).")
 
-    # 2. Delete a missing key safely
-    print("\nEdge Case 2: Safe deletion of missing key 'AZ'")
-    removed_value = hash_table.pop("AZ", None)
-    print("Result of deleting AZ:", removed_value)
-    print("Dictionary unchanged:", hash_table)
+    # 2. Safe delete missing part
+    print("\nAttempting safe delete of missing part 'ZZZ':")
+    removed = auto_parts.pop("ZZZ", None)
+    print("Result of deleting ZZZ:", removed)
 
-    # 3. Update a missing key (creates a new entry)
-    print("\nEdge Case 3: Updating missing key 'NY'")
-    hash_table["NY"] = 55
-    print("After adding NY:", hash_table)
+    # 3. Update missing key (creates new part)
+    print("\nAdding new part 'T888' (missing key update):")
+    auto_parts["T888"] = "Timing Belt - Nissan Altima"
+    print("Updated Inventory:", auto_parts)
 
-    # 4. Using an empty dictionary
-    print("\nEdge Case 4: Operations on an empty dictionary")
-    empty_dict = {}
-    print("Empty dictionary:", empty_dict)
-    print("Trying to lookup a key in empty dictionary:")
-    print("empty_dict.get('anything') returns:", empty_dict.get("anything"))
+    # 4. Empty dictionary scenario
+    print("\nTesting operations on an empty dictionary:")
+    empty_inventory = {}
+    print("Lookup in empty dictionary:", empty_inventory.get("A123"))
 
 
 if __name__ == "__main__":
     main()
+
